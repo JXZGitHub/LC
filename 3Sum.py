@@ -1,4 +1,3 @@
-#Test change3
 import math
 
 class Solution:
