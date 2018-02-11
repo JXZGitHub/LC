@@ -17,7 +17,7 @@ class Solution(object):
                 """
                 :type n: int
                 :rtype: int
-                Dynamic programming: dp[i] represents the number of stairs needed to reach ith level.
+                Dynamic programming:  dp[i] represents the number of stairs needed to reach ith level.
                 Time O(N) and Space O(N)
                 """
                 dp = {}
