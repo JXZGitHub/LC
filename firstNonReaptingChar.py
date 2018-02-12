@@ -1,5 +1,7 @@
+from collections import defaultdict
 class Solution(object):
     def firstUniqChar(self, s):
+        #Time O(N). Space O(N) <-- each loop has s string slicing, at the first loop it slices nearly the whole string.
         n = len(s)
         seen = set()
         for i in range(n):
@@ -8,7 +10,18 @@ class Solution(object):
             seen.add(s[i])
         return -1
 
-    def firstUniqChar(self, s):
+    def firstUniqChar2(self, s):
+        # Build a dict of char:freq, and re-scan s, as soon as a char in s is in dict with value == 1, return the index.
+        # Time O(2N). Space O(N)
+        count = defaultdict(int)
+        for i, c in enumerate(s):
+            count[c] += 1
+        for i, c in enumerate(s):
+            if count[c] == 1:
+                return i
+        return -1
+
+    def firstUniqChar3(self, s):
         # build frequency table
         freq = {}
         for i, c in enumerate(s):

@@ -60,3 +60,40 @@ class Solution2(object):
             q = parents[q]
 
         return q
+
+class Solution3(object):
+    '''
+       Iterative: use a DFS (stack) to traverse all nodes from root and build a {node:parent} dict. Then add each
+       ancestor of p (including p itself) into a list (can be a set too),
+       and see if q's ancestors are in the set. As soon as one of q's ancestors
+       is in the list (or set), return q.
+       '''
+
+    def lowestCommonAncestor(self, root, A, B):
+        # write your code here
+        stack = []
+        parents = {}
+        a_ancestors = []
+        while root or stack:
+            if root:
+                stack.append(root)
+                if root.left:
+                    parents[root.left] = root
+                root = root.left
+
+            else:
+                root = stack.pop()
+                if root.right:
+                    parents[root.right] = root
+                root = root.right
+
+        while A:
+            a_ancestors.append(A)
+            A = parents.get(A)
+
+        while B:
+            if B in a_ancestors:
+                return B
+            B = parents.get(B)
+
+        return None
