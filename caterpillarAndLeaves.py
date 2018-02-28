@@ -35,8 +35,11 @@ def uneaten_optimized(n,a): #It can reduce a into mutually undivisible factors, 
         else:
             reduced_factors.append(a[i])
 
-
-
+    for leaf in range(1, n + 1):  # This double loop makes it O(n*len(a))
+        for factor in reduced_factors:
+            if leaf % factor == 0: #Leaf is a multipler of factor
+                eaten +=1
+                break
     return n-eaten
 
 print (uneaten_brute_force(7,[2,3,4,5,6,7]))
