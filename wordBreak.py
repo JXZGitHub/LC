@@ -22,11 +22,10 @@ class Solution(object):
         dp = [False for _ in range(wordLength+1)]
         dp[0] = True #Empty string is always in wordDict.
 
-        for subStringLength in range(1,wordLength+1):
-            for partitionLength in range(1,subStringLength+1):
-                if dp[subStringLength-partitionLength] and \
-                   s[subStringLength-partitionLength:subStringLength] in wordDict:
-                    dp[subStringLength] = True
+        for i in range(1,wordLength+1):
+            for j in range(0,i):
+                if dp[j] and s[j:i] in wordDict: #Remember dp starts with 0, so dp[i] corresponds to s[i-1]
+                    dp[i] = True
                     break
 
         return dp[-1]
