@@ -16,20 +16,26 @@ class Solution:
         If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
 
         """
-        start,curr = 0,0
-        seen = set()
+        from collections import Counter, defaultdict
+        curr_count=defaultdict(int) #curr_count represents a running mapping of {char:occurrences} of the current sliding window.
+        expected_count=Counter(t) #Find all counts of all chars in t.
+        min_start,min_end=0,0
         min_len=float('inf')
-        min_s = ''
-        while curr<len(s):
-            if s[curr] in t:
-                seen.add(s[curr])
-            if seen == set(t):
-                if curr-start+1 < min_len:
-                    min_len = curr-start+1
-                    min_s = s[start:curr+1]
-                start = curr+1
-                seen.clear()
-            elif not seen:
-                start +=1
-            curr+=1
-        return min_s
+        i,start,cnt=0,0,0
+        while i < len(s):
+            c=s[i]
+            if c in expected_count:
+                curr_count[c] += 1
+                if curr_count[c]<=expected_count[c]:
+                    cnt+=1
+                if cnt == len(t): #If a given substring matches all occurrences of t (not more).
+                    while(s[start] not in expected_count or curr_count[s[start]] > expected_count[s[start]]):
+                        #Find its start pos
+                        curr_count[s[start]] -=1
+                        start +=1
+                    #Update this substring's starting/ending pos's and minimum length.
+                    if i-start+1<min_len:
+                        min_start,min_end=start,i
+                        min_len=i-start+1
+            i+=1
+        return s[min_start:min_end+1] if min_len!=float('inf') else ''
