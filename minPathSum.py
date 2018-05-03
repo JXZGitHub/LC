@@ -16,7 +16,9 @@ class Solution:
 
         Dynamic programing: Create a dp matrix of same dimension as grid. Set all to 0.
 
-        Non edge case: the value of a cell in dp represents the min path sum from that cell to the destination (bottom right most cell)               dp[row][col] = grid[row][col] + min(dp[row+1][col],dp[row][col+1])
+        Non edge case: the value of a cell in dp represents the min path sum from that cell to the destination (bottom right most cell)
+        dp[row][col] = grid[row][col] + min(dp[row+1][col],dp[row][col+1])
+
         Base case: The bottom right most cell (destination)'s dp value is simpyl its grid value.
         Edge cases: each cell on the bottom most row and each cell on the right most column is just its current grid value + its previous dp value(previous means right neighbor for bottom edge, and bottom neighbor for right edge.)
         Then we start visiting each node of dp matrix right to left and bottom to top.
