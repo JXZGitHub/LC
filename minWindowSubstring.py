@@ -14,6 +14,8 @@ class Solution:
         If there is no such window in S that covers all characters in T, return the empty string "".
 
         If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+        Time: O(N), N is length of s
+        Space: O(K), K is length of differnet chars of t
 
         """
         from collections import Counter, defaultdict
@@ -26,7 +28,7 @@ class Solution:
             c=s[i]
             if c in expected_count:
                 curr_count[c] += 1
-                if curr_count[c]<=expected_count[c]:
+                if curr_count[c]<expected_count[c]:
                     cnt+=1
                 if cnt == len(t): #If a given substring matches all occurrences of t (not more).
                     while(s[start] not in expected_count or curr_count[s[start]] > expected_count[s[start]]):
