@@ -21,6 +21,8 @@ class Solution2:
     # @param {integer[]} nums
     # @param {integer} k
     # @return {integer}
+    # Time: (n*log(n))
+    # Space: (n)
     def findKthLargest(self, nums, k):
         if not nums:
             return None

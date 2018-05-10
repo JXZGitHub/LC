@@ -8,6 +8,8 @@ class Solution:
         """Create
         1) a running previous node that's always one step behind the current nodes being compared.
         2) a fixed node that's one node behind the starting node of the final merged list.
+        Time: O(N)
+        Space: O(1)
         """
         prev = ListNode(-1)
         preHead = prev
@@ -21,6 +23,6 @@ class Solution:
 
             prev = prev.next #Stay one node behind the most advanced, keeping track of the previous one,
 
-        prev.next = l1 or l2
+        prev.next = l1 or l2  #One of the list must have reached end (None), so connect prev.next to the start of the surviving list.
         return preHead.next
 
