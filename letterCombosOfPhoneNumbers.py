@@ -8,21 +8,22 @@ class Solution:
 
     Order between each combination does not matter.
     """
+
     def letterCombinations(self, digits):
         """
         :type digits: str
         :rtype: List[str]
         """
-        result = []
-
         mapping = ['', '', "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
-        self.rowRecurse(mapping, digits, 0, '', result)
+        result = []
+        if digits:
+            self.recurse(mapping, digits, 0, '', result)
         return result
 
-    def rowRecurse(self, mapping, digits, level, currCombo, result):
-        if level == len(digits):
+    def recurse(self, mapping, digits, index, currCombo, result):
+        if index == len(digits):
             result.append(currCombo)
         else:
-            letters = mapping[int(digits[level])]
+            letters = mapping[int(digits[index])]
             for l in letters:
-                self.rowRecurse(mapping, digits, level + 1, currCombo + l, result)
+                self.recurse(mapping, digits, index + 1, currCombo + l, result)

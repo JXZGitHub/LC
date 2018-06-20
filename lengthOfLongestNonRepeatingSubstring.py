@@ -1,20 +1,19 @@
 class Solution:
-    def lengthOfLongestNonRepeatingSubstring(self, s):
-        #Returns the length of the longest nonrepeating substring in s:
-        #eg: 'abcdecxyzhmnoabc' returns 12 ('decxyzhmnoab')
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        seen = {}
+        length = 0
         start = 0
-        longest = 0
-        letterToIndex = {}
-        for i,c in enumerate(s):
-            #SLIDING WINDOW:Start accumulating a string beginning with start, until it hits something seen before,
-            ## then slide the start to be right after the seen letter.
-            if c in letterToIndex: #If a letter has been seen before
-                # Adjust start index to right after the seen letter's index, if it's AFTER the current start index
-                # If the last seen letter location is BEFORE start, then no need to adjust start.
-                start = max(letterToIndex[c]+1,start)
-            longest = max(longest, i-start+1)
-            letterToIndex[c]=i
-        return longest
+        for i,n in enumerate(s):
+            if n in seen and seen[n] >= start:
+                start = seen[n] + 1 #shift the sliding window's start to be just after the last seen char,
+                                    # only if the last seen one is inside the current sliding window (>= start)
+            length = max(length,i-start+1)
+            seen[n] = i
+        return length
 
 s=Solution()
 print (s.lengthOfLongestNonRepeatingSubstring('abcdecxyzhmnoabc'),
