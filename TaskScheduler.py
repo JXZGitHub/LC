@@ -19,7 +19,7 @@ class Solution:
     Finish highest frequency tasks first, by diversifying the tasks as much as possible.
 
     Time: L+L*logL+L*(n+n*L*LogL) ?????
-    Space: O(L), where L is length of tasks
+    Space: O(1), there can be a maximum length of 26 in the queue, as there are only 26 letters in the alphabet.
 
     """
     def leastInterval(self, tasks, n):
@@ -31,26 +31,27 @@ class Solution:
         taskCount = Counter(tasks)
         q = [-1 * v for v in taskCount.values()]
         heapq.heapify(q)
-        cycle = n + 1
+        cycles = n + 1 # a job + N idle cycles
         res = 0
         while q:
             temp = []
             count = 0
-            for _ in range(cycle):
+            for _ in range(cycles): #Each iteration in cycle represents a single cpu cycle (ie, a job + N idle cycles )
                 if q:
-                    temp.append(-1 * heapq.heappop(q))
-                    count += 1
+                    temp.append(-1 * heapq.heappop(q)) #Temp stores the remaining number of times each job has.
+                    count += 1 #As long as q is not empty, keeps counting until (job + N idle cycles).
+                               #else stops counting as there's fewer jobs than cycles left.
             for t in temp:
-                t -= 1
+                t -= 1 #Subtracts once for each job as it was used in the previous loop (picked to be in a cycle)
                 if t > 0:
-                    heapq.heappush(q, -1 * t)
+                    heapq.heappush(q, -1 * t) #If there's till more jobs fore ach task, put it back on queue)
 
             if q:
-                res += cycle
+                res += cycles #If more jobs in queue, it means the full cycle was used, so count it.
             else:
-                res += count
+                res += count #else, it means there were fewer jobs than cycle remaining, so just count the number of jobs picked.
         return res
 
 sol = Solution()
 print (sol.leastInterval(["A","A","A","B","B","B"],2))
-print (sol.leastInterval(["A","A","A","B","B","B","C","D"],2))
+#print (sol.leastInterval(["A","A","A","B","B","B","C","D"],2))
