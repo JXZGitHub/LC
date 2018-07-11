@@ -3,9 +3,12 @@ class Solution(object):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
-        #Recursive Depth First Search.
+        #Recursive Depth First Search. Backtracking
 
-        Time O(N*N!). Space O(N)
+        Time: O(N*N!), N is length of nums.
+        There are N! calls to self.recurse(), and inside each call, we have to loop through nums (N times)
+
+        Space: O(N)
         """
         result = []
         visited = [False for _ in range(len(nums))]

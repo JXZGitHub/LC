@@ -38,7 +38,7 @@ class Solution:
 
     def subsets_iterative(self, nums):
         """
-        O(2^n): If there are n numbers in the set, there are 2^n power set (2^n total number of subsets including empty).
+        O(n*2^n): If there are n numbers in the set, there are 2^n power set (2^n total number of subsets including empty).
         Space O(1)
 
         :type nums: List[int]

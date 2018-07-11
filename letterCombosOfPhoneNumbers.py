@@ -13,6 +13,9 @@ class Solution:
         """
         :type digits: str
         :rtype: List[str]
+
+        Time: O(4^n), n is length of digits. Worst case, if every digit has 4 letters (eg, 79)
+        Space O(n), n is length of digits
         """
         mapping = ['', '', "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
         result = []
