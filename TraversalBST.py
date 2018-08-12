@@ -1,4 +1,19 @@
 from collections import deque
+# DFS:
+# PreOrder: Node, Left, Right. Can be done both recursive, and iterative, using STACK.
+# PostOrder: Left, Right, Node. Can be done both recursive, and iterative, using STACK.
+# inOrder: Left, Node, Right. Can be done both recursive, and iterative, using STACK. Gives sort ordering.
+
+# All above require stack space proportional to the height of the tree (which is log(N), which is a call stack
+# for the recursive and a parent stack for the iterative ones.
+
+# BFS:
+# Level Order:, BFS. Iterative using Queue, space complexity is maximum nodes at a given level, as much as N/2, where N is total # of nodes in tree.
+# Recursive for level order is hard.
+
+
+
+
 
 class TreeNode:
     def __init__(self, x):
