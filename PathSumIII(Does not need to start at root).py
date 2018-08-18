@@ -102,6 +102,5 @@ class Solution_print_all_paths:
         self.recurse(root.left, root.val + previousSum, targetSum, seenSum, combo, result)
         self.recurse(root.right, root.val + previousSum, targetSum, seenSum, combo, result)
 
-        seenSum[
-            root.val + previousSum] -= 1  # Backtrack back to the root so we need to erase whatever seenSum updates we did when going down the root.
+        seenSum[root.val + previousSum] -= 1  # Backtrack back to the root so we need to erase whatever seenSum updates we did when going down the root.
         combo.pop()  # Backtrack to root so we remove the the last added node
