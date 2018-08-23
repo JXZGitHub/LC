@@ -100,3 +100,23 @@ def LevelOrderIterative(self, root):
         if root.right:
             queue.append(root.right)
 
+def InOrderMorrisTraversal(self, root):
+    #O(1) space, but connecting the right subtree of each 'ready to be traversed' node to its inorder successor, then erasing that link
+    prev, curr, res = None, root, []
+    while curr:
+        if not curr.left:
+            #This is a simple leaf node, ready to be traversed.
+            res.append(root.val)
+            curr = curr.right
+        else:
+            prev = curr.left
+            while prev.right and prev.right!=curr: #Not previously 'threaded':
+                prev = prev.right
+            if not prev.right:
+                prev.right = curr #Thread a leaf node to its next in order successor.
+                curr = curr.left
+            else:
+                prev.right = None #Erase a previously threaded link, as this node is now ready to be traversed
+                res.append(prev.node)
+                curr = curr.right
+    return res
