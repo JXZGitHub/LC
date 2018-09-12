@@ -13,10 +13,23 @@ class Solution(object):
         #The root of a whole (balanced) tree should start at the midpoint of the array (pivot point), and every thing to the left
         #of the pivot is in left subtree, and right is in right subtree. This is true for every subtree.
         """
-        if not nums:
+        return self.recurse(nums,0,len(nums)-1)
+
+    def recurse(self, sortedList, start, end):
+        if start > end:
             return None
-        rootIndex = len(nums) // 2
-        root = TreeNode(nums[rootIndex])
-        root.left = self.sortedArrayToBST(nums[:rootIndex])
-        root.right = self.sortedArrayToBST(nums[rootIndex+1:])
-        return root
+        if start == end:
+            return TreeNode(sortedList[start])
+        mid = start + ((end - start) // 2)
+        parent = TreeNode(sortedList[mid])
+        parent.left = self.recurse(sortedList, start, mid - 1)
+        parent.right = self.recurse(sortedList, mid + 1, end)
+        return parent
+
+        # if not nums:
+        #     return None
+        # rootIndex = len(nums) // 2
+        # root = TreeNode(nums[rootIndex])
+        # root.left = self.sortedArrayToBST(nums[:rootIndex])
+        # root.right = self.sortedArrayToBST(nums[rootIndex+1:])
+        # return root

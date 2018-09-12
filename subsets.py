@@ -1,7 +1,7 @@
 class Solution:
     def subsets_recursive(self, nums):
         """
-        O(2^n). Space O(1)
+        O(n*2^n). Space O(1)
         :type nums: List[int]
         :rtype: List[List[int]]
 
@@ -69,7 +69,7 @@ class Solution:
             size = len(result)
             for j in range(size):
                 result.append(list(result[j])) #Make a copy of every existing result's element, and append to end.
-                result[-1].append(nums[i])     #Then append to that last 'copy' with the latest element of num.
+                result[-1].append(nums[i])     #Then append to EVERY 'copy' with the latest element of num.
         return result
 
 sol = Solution()
