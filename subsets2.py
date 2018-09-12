@@ -7,7 +7,7 @@ class Solution(object):
               If there are n numbers in the set, there are 2^n items in its power set (2^n total number of subsets including empty).
               Therefore there are 2^n recursive function calls, and within each call it loops through len(nums) times.
               So total runtime is n*2^n.
-        Space O(1)
+        Space O(n)
 
         """
         nums.sort() #sort first, to better remove duplicate durign recursion.

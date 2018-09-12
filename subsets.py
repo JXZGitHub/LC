@@ -1,7 +1,7 @@
 class Solution:
     def subsets_recursive(self, nums):
         """
-        O(n*2^n). Space O(1)
+        O(n*2^n). Space O(n)
         :type nums: List[int]
         :rtype: List[List[int]]
 
