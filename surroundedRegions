@@ -68,3 +68,41 @@ def s2(m):
         for c in range(len(m[r])):
             line+=str(m[r][c])
         print line
+
+=============
+
+def s3(m):    
+    for r in range(len(m)):
+        for c in range(len(m[r])):
+            if r==0 or r==len(m)-1 or c==0 or c==len(m[0])-1:
+                rec3(m,r,c)
+                
+    for r in range(len(m)):
+        for c in range(len(m[r])):
+            if m[r][c]==0:
+                m[r][c] = 1
+            elif m[r][c]=='#':
+                m[r][c] = 0
+     
+    for r in range(len(m)):
+        line = ''
+        for c in range(len(m[r])):
+            line+=str(m[r][c])
+        print line
+
+def rec3(m,r,c):
+    q=collections.deque()
+    if m[r][c]==0:
+        q.append((r,c))    
+    while q:
+        c = q.popleft()        
+        r,c=c[0],c[1]
+        m[r][c]='#'
+        if r<len(m)-1 and m[r+1][c] == 0:
+            q.append((r+1,c))
+        if r>0 and m[r-1][c] == 0:
+            q.append((r-1,c))
+        if c<len(m[0])-1 and m[r][c+1] == 0:
+            q.append((r,c+1))
+        if c>0 and m[r][c-1] == 0:
+            q.append((r,c-1))
