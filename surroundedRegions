@@ -1,0 +1,28 @@
+def rec(m,v,r,c,alive):    
+    if (r,c) in v or r<0 or r>len(m)-1 or c<0 or c>len(m[0])-1 or m[r][c] != 0 :    
+        return
+    else:        
+        alive.add((r,c))  
+        v.add((r,c))        
+        rec(m,v,r+1,c,alive)
+        rec(m,v,r,c+1,alive)
+        rec(m,v,r-1,c,alive)
+        rec(m,v,r,c-1,alive)
+
+
+def s(m):
+    alive,v = set(),set()
+    for r in range(len(m)):
+        for c in range(len(m[r])):
+            if r==0 or r==len(m)-1 or c==0 or c==len(m[0])-1:
+                rec(m,v,r,c,alive)   
+    for r in range(len(m)):
+        for c in range(len(m[r])):
+            if m[r][c]==0 and (r,c) not in alive:
+                m[r][c] = 1
+     
+    for r in range(len(m)):
+        line = ''
+        for c in range(len(m[r])):
+            line+=str(m[r][c])
+        print line
