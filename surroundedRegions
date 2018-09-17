@@ -26,3 +26,45 @@ def s(m):
         for c in range(len(m[r])):
             line+=str(m[r][c])
         print line
+
+
+============
+
+def rec2(m,parents,r,c,pr,pc):    
+    if (r,c) in parents or r<0 or r>len(m)-1 or c<0 or c>len(m[0])-1 or m[r][c] != 0 :    
+        return
+    else:        
+        parentCurr=find((r,c),parents)
+        parentPrev=find((pr,pc),parents)
+        if parentCurr != parentPrev:
+            parents[parentCurr] = parentPrev
+        rec2(m,parents,r+1,c,r,c)
+        rec2(m,parents,r-1,c,r,c)
+        rec2(m,parents,r,c+1,r,c)
+        rec2(m,parents,r,c-1,r,c)
+
+def find(node,parents):
+    if node not in parents:
+        parents[node] = node
+        return node
+    if parents[node]!=node:
+        parents[node]=find(parents[node],parents)
+    return parents[node]
+
+def s2(m):
+    parents={}
+    for r in range(len(m)):
+        for c in range(len(m[r])):
+            if r==0 or r==len(m)-1 or c==0 or c==len(m[0])-1:
+                rec2(m,parents,r,c,-1,-1)
+                
+    for r in range(len(m)):
+        for c in range(len(m[r])):
+            if m[r][c]==0 and parents.get((r,c)) != (-1,-1):
+                m[r][c] = 1
+     
+    for r in range(len(m)):
+        line = ''
+        for c in range(len(m[r])):
+            line+=str(m[r][c])
+        print line
