@@ -24,3 +24,23 @@ def cc(g):
  
     print res,p
     print len(res)
+
+def cc2(g):
+    p=collections.defaultdict(list)
+    v=set()
+    res = 0
+    for (a,b) in g:        
+        p[a].append(b)
+        p[b].append(a)
+    for n in p:
+        if n not in v:
+            res +=1
+            rec(n,p,v)
+    print res
+
+def rec(n,p,v):
+    if n in v:
+        return
+    v.add(n)
+    for c in p[n]:
+        rec(c,p,v) 
