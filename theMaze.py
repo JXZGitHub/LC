@@ -5,6 +5,10 @@ class Solution:
         :type start: List[int]
         :type destination: List[int]
         :rtype: bool
+        DFS:
+
+        Time: O(M*N*max(M,N)) <-- for every node, it needs to travel a max of the longest possible width or height.
+        Space: O(M*N)
         """
         visited = set()
         return self.traverse(maze, visited, tuple(start), destination)
