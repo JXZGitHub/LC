@@ -12,7 +12,7 @@ class Solution:
                     self.traverse(grid, visited, row, col, (0, 0), island)
                     if island:
                         res.add(tuple(island))
-        return res
+        return len(res)
 
     def traverse(self, grid, visited, x, y, coord, island):
         if (x, y) in visited or not (0 <= x < len(grid) and 0 <= y < len(grid[0])) or grid[x][y] == 0:
