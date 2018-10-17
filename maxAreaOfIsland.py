@@ -22,7 +22,7 @@ class Solution:
             area += self.traverse(newR,newC,grid,visited,0)      
         return area
                 
-class Solution_BFS
+class Solution_BFS:
     def maxAreaOfIsland(self, grid):
         """
         :type grid: List[List[int]]

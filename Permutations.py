@@ -27,3 +27,5 @@ class Solution(object):
                 currNums.pop()  # Remove right-most number from the list to make way for more calls when this function returns from call stack.
                 visited[i] = False  # Restore visited to unvisited for new traversals in a new call up the stack.
 
+sol = Solution()
+print (sol.permute([1,2,3,4])[4])
