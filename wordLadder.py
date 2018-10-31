@@ -2,6 +2,36 @@ from collections import deque
 
 
 class Solution:
+    def ladderLength(self, beginWord, endWord, wordList):
+        """
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: List[List[str]]
+        Time: O(26*L*N), where L is average length of each word, and N is the number of words in the wordList. Worst case here is every word transformed happens to be in the list, so each transformation needs 26 * length of word.
+        Space: O(N)
+        """
+        wordListSet = set(wordList + [beginWord])
+        q = set([beginWord])
+        visited = set([beginWord])
+        count = 0
+        while q:
+            count += 1
+            newQ = set()
+            for word in q:
+                if word == endWord:
+                    return count
+                for i in range(len(word)):
+                    for sub in 'abcdefghijklmnopqrstuvwxyz':
+                        if sub != word[i]:
+                            newWord = word[:i] + sub + word[i + 1:]
+                            if newWord in wordListSet and newWord not in visited:
+                                newQ.add(newWord)
+                                visited.add(newWord)
+            q = newQ
+        return 0
+
+class Solution_2:
     """
     Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
 
