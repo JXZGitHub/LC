@@ -11,10 +11,6 @@ from collections import deque
 # Level Order:, BFS. Iterative using Queue, space complexity is maximum nodes at a given level, as much as N/2, where N is total # of nodes in tree.
 # Recursive for level order is hard.
 
-
-
-
-
 class TreeNode:
     def __init__(self, x):
         self.val = x
