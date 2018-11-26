@@ -5,7 +5,7 @@ class Solution:
         :type target: int
         :rtype: bool
 
-        Time: O(log(M+N))
+        Time: O(log(M*N))
         Space: O(1)
 
         This problem is similar to searchMatrix 2 -
