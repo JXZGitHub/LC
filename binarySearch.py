@@ -76,6 +76,7 @@ print (searchRightBoundary([1,3,3,3,5,7],3))
 print (searchRightBoundary([3],3))
 print (searchRightBoundary([2],3))
 print (searchRightBoundary([4],3))
+print (searchRightBoundary([],3))
 
 # [1,3,3,3,5,7], target = 4 will return 1 (2nd element)
 #     [1,3,3,3,5,7], target = 3 will return 1 (2nd element)
