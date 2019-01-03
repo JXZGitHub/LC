@@ -1,10 +1,17 @@
-def binarySearch(start, end, nums, target):
-    while (start <= end):
+def binarySearch(nums, target):
+    """
+    Invariant is that the target aleays exists inside [start,end-1] ( same as [start,end), right exclusive )
+    Initial condition is therefore: start = 0, end = len(nums)
+
+    If start == end, then there's no element left.
+    """
+    start,end=0,len(nums)
+    while (start < end):
         mid = start + (end - start) // 2 #Treat mid as offset from start, not absolute index.
         if nums[mid] == target:
             return mid
         elif nums[mid] > target:
-            end = mid-1
+            end = mid #Don't do mid-1 because end is right exclusive.
         else:
             start = mid+1
     return None
@@ -21,20 +28,14 @@ def searchLeftBoundary(nums, target):
     In ascending array, find the position of the last element that's < target OR first element that's = target.
     This is the left boundary
     """
-    start, end = 0, len(nums)-1
-    index = None
-    while start <= end:
+    start, end = 0, len(nums)
+    while start < end:
         mid = start + (end - start) // 2
         if target <= nums[mid]:
-            end = mid -1
+            end = mid
         elif target > nums[mid]:
             start = mid + 1
-        if target == nums[mid]:
-            index = mid
-    if index is not None:
-        return index
-    else:
-        return end
+    return start
 
 
 def searchRightBoundary(nums, target):
@@ -49,20 +50,14 @@ def searchRightBoundary(nums, target):
     In ascending array, find the position of the first element that's > target OR last element that's = target.
     This is the RIGHT boundary.
     """
-    start, end = 0, len(nums)-1
-    index = None
-    while start <= end:
+    start, end = 0, len(nums)
+    while start < end:
         mid = start + (end - start) // 2
         if target >= nums[mid]:
             start = mid + 1
         elif target < nums[mid]:
-            end = mid - 1
-        if target == nums[mid]:
-            index = mid
-    if index is not None:
-        return index
-    else:
-        return start
+            end = mid
+    return start
 
 
 print (searchLeftBoundary([1,3,3,3,5,7],4))
