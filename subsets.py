@@ -1,7 +1,7 @@
 class Solution:
     def subsets_recursive(self, nums):
         """
-        O(n*2^n). Space O(n)
+        O(n*2^n). Space O(n). Number of recursive calls for powerset: 2^N. Each one copies output to res, which is N.
         :type nums: List[int]
         :rtype: List[List[int]]
 

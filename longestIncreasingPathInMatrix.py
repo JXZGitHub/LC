@@ -4,34 +4,25 @@ class Solution:
         :type matrix: List[List[int]]
         :rtype: int
 
-        Recursive DFS + Memoization (DP)
+        Recursive DFS + Memoization (DP).
+        DP[r][c] = The longest increasing path starting from r,c.
 
         Time: O(R*C)
         Space: Stack Frame: O(R*C). Heap: O(R*C)
         """
-        cache = {}  # key is (r,c), and value is the longest increasing path starting from this location.
-        maxLen = 0
+        dp = [[1 for _ in range(len(matrix[0]))] for _ in range(len(matrix))]
+        res = 0
         for r in range(len(matrix)):
             for c in range(len(matrix[r])):
-                maxLen = max(self.recurse(matrix, r, c, cache), maxLen)
-        return maxLen
+                res = max(res, self.traverse(matrix, r, c, dp))
+        return res
 
-    def recurse(self, matrix, r, c, cache):
-        if (r, c) in cache:
-            return cache[(r, c)]
-        maxLen = 1
-        for dr, dc in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+    def traverse(self, matrix, r, c, dp):
+        if dp[r][c] > 1:
+            return dp[r][c]
+        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
             newR = r + dr
             newC = c + dc
-            if newR == len(matrix) or newR < 0 or newC == len(matrix[0]) or newC < 0:
-                continue  # The next location is out of bounds, don't go there. Skip to try next direcion.
-            if matrix[r][c] >= matrix[newR][newC]:
-                continue  # The next location is not increasing, don't go there. Skip to try next direcion.
-
-            # The next location is increasing, keep count of it
-            currLen = 1 + self.recurse(matrix, newR, newC, cache)
-
-            maxLen = max(currLen, maxLen)  # At each given node, it can have multiple length in multiple directions, so only keep the longest.
-
-        cache[(r, c)] = maxLen #Base case, r,c has nowhere to go, so longest path from r,c is maxLen which is initialized at 1.
-        return maxLen
+            if 0 <= newR < len(matrix) and 0 <= newC < len(matrix[0]) and matrix[newR][newC] > matrix[r][c]:
+                dp[r][c] = max(dp[r][c], 1 + self.traverse(matrix, newR, newC, dp))
+        return dp[r][c]

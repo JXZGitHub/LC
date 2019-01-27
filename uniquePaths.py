@@ -35,16 +35,46 @@ class Solution2(object):
         :type m: int
         :type n: int
         :rtype: int
+
+        Time: O(M*N)
+        Space: O(M*N)
         """
-        grid = [[0 for _ in range(n)] for _ in range(m)]
-        grid[0][0] = 1
+        dp = [[0 for _ in range(n) ] for _ in range(m) ]
+        dp[0][0] = 1
+        for r in range(m):
+            for c in range(n):
+                if not (r==0 and c==0):
+                    if r==0 :
+                        dp[r][c] = dp[r][c-1]
+                    elif c==0:
+                        dp[r][c] = dp[r-1][c]
+                    else:
+                        dp[r][c] = dp[r][c-1] + dp[r-1][c]
 
-        for row in range(len(grid)):
-            for col in range(len(grid[row])):
-                if row + col != 0:
-                    grid[row][col] = grid[max(row - 1, 0)][col] + grid[row][max(col - 1, 0)]
+        return dp[m-1][n-1]
 
-        return grid[m - 1][n - 1]
+    def uniquePaths_1dDP(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+
+        Time: O(M*N)
+        Space: O(N)
+        """
+        dp = [0 for _ in range(n)]
+        dp[0] = 1
+        for r in range(m):
+            for c in range(n):
+                if not (r == 0 and c == 0):
+                    if r == 0:
+                        dp[c] = dp[c - 1]
+                    elif c == 0:
+                        dp[c] = dp[c]
+                    else:
+                        dp[c] = dp[c] + dp[c - 1]
+
+        return dp[n - 1]
 
 sol = Solution2()
-print (sol.uniquePaths(10,7))
+print (sol.uniquePaths_1dDP(3,2))

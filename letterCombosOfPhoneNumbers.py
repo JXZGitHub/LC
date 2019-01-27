@@ -30,3 +30,26 @@ class Solution:
             letters = mapping[int(digits[index])]
             for l in letters:
                 self.recurse(mapping, digits, index + 1, currCombo + l, result)
+
+    def letterCombinations_iterative(self, digits):
+            """
+            :type digits: str
+            :rtype: List[str]
+            """
+            mapper = ["0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+
+            res = []
+            if len(digits) == 0:
+                return res
+            res.append("")
+            for digit in digits:
+                tmp = []
+                chars = mapper[int(digit)]
+                for r in res:
+                    for char in chars:
+                        tmp.append(r + char)
+                res = tmp
+            return res
+
+sol = Solution()
+print (sol.letterCombinations_iterative('23'))

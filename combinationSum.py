@@ -35,11 +35,7 @@ class Solution(object):
 
     def recurse(self, candidates, start, target, combo, res):
         if target == 0:
-            print ('Hit:', combo[:])
             res.append(combo[:])
-        elif target < 0:
-            print('Passed:', combo[:])
-            return
         else:
             for i in range(start, len(candidates)):
                 if candidates[i] > target:

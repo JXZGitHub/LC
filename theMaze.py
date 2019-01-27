@@ -11,40 +11,23 @@ class Solution:
         Space: O(M*N)
         """
         visited = set()
-        return self.traverse(maze, visited, tuple(start), destination)
+        return self.recurse(maze, start, set(), destination)
 
-    def traverse(self, maze, visited, location, destination):
-        if location in visited:
-            return
-        if list(location) == destination:
+    def recurse(self, maze, start, visited, destination):
+        if start == destination:
             return True
-        visited.add(location)
-        x, y = location[0], location[1]
-        directions = []
-        while y - 1 >= 0 and maze[x][y - 1] != 1:
-            y -= 1
-        if y != location[1]:
-            directions.append((x, y))
-
-        x, y = location[0], location[1]
-        while y + 1 <= len(maze[0]) - 1 and maze[x][y + 1] != 1:
-            y += 1
-        if y != location[1]:
-            directions.append((x, y))
-
-        x, y = location[0], location[1]
-        while x + 1 <= len(maze) - 1 and maze[x + 1][y] != 1:
-            x += 1
-        if x != location[0]:
-            directions.append((x, y))
-
-        x, y = location[0], location[1]
-        while x - 1 >= 0 and maze[x - 1][y] != 1:
-            x -= 1
-        if x != location[0]:
-            directions.append((x, y))
-
-        for d in directions:
-            if self.traverse(maze, visited, d, destination):
+        if tuple(start) in visited:
+            return
+        visited.add(tuple(start))
+        r, c = start[0], start[1]
+        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            newR = r
+            newC = c
+            while (0 <= newR < len(maze) and 0 <= newC < len(maze[r]) and maze[newR][newC] == 0):
+                newR += dr
+                newC += dc
+            newR -= dr
+            newC -= dc
+            if self.recurse(maze, [newR, newC], visited, destination):
                 return True
         return False

@@ -1,6 +1,4 @@
 import math
-
-
 class Solution:
     def getFactors(self, n):
         """
@@ -12,10 +10,7 @@ class Solution:
         return res
 
     def recurse(self, start, n, output, res):
-        if n == 1 and len(output) > 1:
-            res.append(output[:])
-        else:
-            for i in range(start, int(math.sqrt(n)) + 1):
+        for i in range(start, int(math.sqrt(n)) + 1):
                 q, r = divmod(n, i)  # 8/2 ===> q=4,r=0
                 if r == 0:  # If divisble
                     output.append(i)
@@ -25,4 +20,4 @@ class Solution:
                     self.recurse(i, q, output, res)
                     output.pop()
 sol = Solution()
-print (sol.getFactors(16))
+print (sol.getFactors(1200))
