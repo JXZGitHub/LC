@@ -29,4 +29,4 @@ class Solution:
         return distance
 sol = Solution()
 
-print (sol.updateMatrix([[0,0,0],[0,1,0],[1,1,1]]))
+print (sol.updateMatrix([[0,1,0,1,1],[1,1,0,0,1],[0,0,0,1,0],[1,0,1,1,1],[1,0,0,0,1]]))

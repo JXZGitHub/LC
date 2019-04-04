@@ -3,6 +3,9 @@ class Solution:
         """
         :type s: str
         :rtype: str
+
+        Time: O(N^2)
+        Space: O(1)
         """
         start = end = 0 #left and right index boundaries of the current longest palindrome,
                         #starting from beginning as center.
@@ -33,8 +36,8 @@ class Solution:
         return r - l - 1 #xABBAy, where l is 0, r is 5. so length of palindrome ABBA should be 5-0-1=4.
 
 s = Solution()
-print (s.longestPalindrome('abba'),
-       s.longestPalindrome('a'),
-       s.longestPalindrome('aa'),
-       s.longestPalindrome('xababady'),
-       s.longestPalindrome('') )
+print (#s.longestPalindrome('abba'),
+       #s.longestPalindrome('a'),
+       #s.longestPalindrome('aa'),
+       s.longestPalindrome('xababady'))
+       #s.longestPalindrome('') )
