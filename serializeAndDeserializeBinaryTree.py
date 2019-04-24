@@ -9,6 +9,8 @@ class Codec:
     def serialize(self, root):
         """Encodes a tree to a single string.
 
+        Solution is same for BST.
+
         :type root: TreeNode
         :rtype: str
         Time: O(N), N is number of nodes in tree

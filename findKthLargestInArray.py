@@ -1,28 +1,76 @@
 import heapq
-from random import choice
-
 class Solution(object):
     def findKthLargest(self, nums, k):
         """
         :type nums: List[int]
         :type k: int
         :rtype: int
+        Time: O(n*log(k)) = O(n)
+        Space: O(k) = O(1)
+
+        Maintain a min heap (because we are looking for k'th LARGEST) of size K,
+        and selectively push elements in if size of heap is at K.
         """
-        negativeNums = list(map(lambda x: -x, nums))
-        heapq.heapify(negativeNums)
-        for _ in range(k - 1):
-            heapq.heappop(negativeNums)
-        return -heapq.heappop(negativeNums)
+        heap=[]
+        for n in nums:
+            if len(heap)<k:
+                heapq.heappush(heap,n)
+            else:
+                least = heap[0] #Least is the current Kth's largest
+                if n > least: #But we now got a bigger Kth's largest, so replace that one.
+                    heapq.heapreplace(heap,n)
+        return heap[0] #min of heap size K is Kth largest.
 
 
+class Solution2:
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+
+        Time: O(N) best case, O(N^2) worst case.
+        Space: O(1)
+
+        sub-problem: rearrange nums so that all elements > nums[0] is to its LEFT,
+        and all <nums[0] to its RIGHT. nums[0] becomes the pivot.
+        Then check if position of the pivot (the 'pivot_location')
+        is exactly k-1, <k-1, or >k-1, and do the same on a subset of nums accordingly, until position
+        of the pivot is exactly k-1, then pivot is Kth' largest.
+        """
+        while True:
+            pivot_location = self.partition(nums, left, right)
+            if pivot_location == k - 1:
+                return nums[pivot_location]
+            elif pivot_location < k - 1:
+                left = pivot_location + 1
+            else:
+                right = pivot_location - 1
+        return None
+
+    def partition(self, nums, left, right):
+        pivot = nums[left]
+        l = left + 1
+        r = right
+        while l <= r:
+            if (nums[l] < pivot < nums[r]):
+                nums[l], nums[r] = nums[r], nums[l]
+                l += 1
+                r -= 1
+            if nums[l] >= pivot:
+                l += 1
+            if nums[r] <= pivot:
+                r -= 1
+        nums[left], nums[r] = nums[r], nums[left]
+        return r
 
 import random
-class Solution2:
+class Solution3:
     # @param {integer[]} nums
     # @param {integer} k
     # @return {integer}
-    # Time: (n*log(n))
-    # Space: (n)
+    # Time: O(n)
+    # Space: O(1) on heap. O(log(n)) on stack.
     def findKthLargest(self, nums, k):
         if not nums:
             return None
