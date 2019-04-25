@@ -31,17 +31,18 @@ class Solution2:
         """
         :type root: TreeNode
         :rtype: int
-        """
-        if root:
-            return self.sumAll(root,0)
-        else:
-            return 0
 
-    def sumAll(self, root, currVal):
+        Time: O(N)
+        Space O(Log(N))
+        """
+
+        return self.recurse(root, 0)
+
+    def recurse(self, root, prevNumber):
         if not root:
             return 0
+        currNumber = prevNumber * 10 + root.val
         if not root.left and not root.right:
-            return currVal*10 + root.val
-
-        return self.sumAll(root.right, currVal*10 + root.val) + \
-               self.sumAll(root.left, currVal*10 + root.val)
+            return currNumber
+        else:
+            return self.recurse(root.left, currNumber) + self.recurse(root.right, currNumber)

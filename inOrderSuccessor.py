@@ -28,3 +28,31 @@ class Solution(object):
                 root = root.right
 
         return successor
+
+
+class Solution(object):
+    def inorderSuccessor(self, root, p):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :rtype: TreeNode
+
+        Time O(N)
+        Space O(log(N))
+
+        Just in order traversal while looking for the target.
+        """
+        stack = []
+        found = False
+        while root or stack:
+            if root:
+                stack.append(root)
+                root = root.left
+            else:
+                node = stack.pop()
+                if found:
+                    return node
+                root = node.right
+                if node == p:
+                    found = True
+        return None

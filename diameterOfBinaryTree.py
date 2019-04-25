@@ -4,8 +4,62 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
+class Solution_BFS(object):
+    # Definition for a binary tree node.
+    # class TreeNode(object):
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.left = None
+    #         self.right = None
 
-class Solution(object):
+    def diameterOfBinaryTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        res = 0
+        if not root:
+            return res
+        q = [root]
+        while q:
+            new_q = []
+            for n in q:
+                d = self.maxD(n.left) + self.maxD(n.right)
+                res = max(res, d)
+                if n.left:
+                    new_q.append(n.left)
+                if n.right:
+                    new_q.append(n.right)
+            q = new_q
+        return res
+
+    def maxD(self, root):
+        if not root:
+            return 0
+        else:
+            return 1 + max(self.maxD(root.left), self.maxD(root.right))
+
+
+class Solution_DFS(object):
+    def diameterOfBinaryTree(self, root):
+        return self.recurse(root, 0)[1]
+
+    def recurse(self, root, maxDiameter):
+        if not root:
+            return 0, maxDiameter
+
+            # This part is just finding max depth
+        leftMaxDepth, maxDiameter = self.recurse(root.left, maxDiameter)
+        rightMaxDepth, maxDiameter = self.recurse(root.right, maxDiameter)
+        maxDepth_from_root = 1 + max(leftMaxDepth, rightMaxDepth)
+
+        # But we also want to keep track of max diameter globally. diameter is sum of left subtree's max depth + right subtree's max depth.
+        maxDiameter_global = max(maxDiameter, leftMaxDepth + rightMaxDepth)
+
+        # We return both max_depth from this root, and global max diameter.
+        return maxDepth_from_root, maxDiameter_global
+
+class Solution_DFS_using_class_variable(object):
     maxDiameter = 0
 
     def diameterOfBinaryTree(self, root):
@@ -36,20 +90,6 @@ class Solution(object):
         return max(leftMaxDepth, rightMaxDepth) + 1  # Max depth (number of nodes) of a given node
 
 
-class Solution_without_class_level_variable(object):
-    def diameterOfBinaryTree(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        return self.depth(root, 0)[1]
 
-    def depth(self, root, diameter):
-        if not root:
-            return 0, diameter
-        left, diameter = self.depth(root.left, diameter)
-        right, diameter = self.depth(root.right, diameter)
-        # 'diameter' will be persistent, and if surpassed, will be updated.
-        return 1 + max(left, right), max(diameter, left + right)  # Returns max depth of tree and max diameter so far
 
 

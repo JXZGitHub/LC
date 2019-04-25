@@ -17,23 +17,23 @@ class Solution:
 class Solution:
     # @param root, a tree link node
     # @return nothing
-    # A BFS using queue, but use a for loop to loop through the size of the queue at every 'level' of the tree,
-    # and re-assign the 'next' pointers for each member of the queue at each level.
+    # A BFS using queue, and at each level connect up each node's next, keeping track of the prev node at each level.
     def connect(self, root):
-        q = deque()
-        if root:
-            q.append(root)
+        """
+        :type root: Node
+        :rtype: Node
+        """
+        q = [root]
         while q:
-            prev_node=None
-            q_size = len(q)
-            for i in range(q_size):
-                #Instead of popping the queue one at a time at each while's itgeration, pop it ALL during the for loop.
-                #At each level of the tree, the members of the queues are always left to right nodes on that level.
-                node = q.popleft()
-                if prev_node:
-                    prev_node.next = node
-                prev_node = node #Remember the previous node on the same level
-                if prev_node.left:
-                    q.append(prev_node.left)
-                if prev_node.right:
-                    q.append(prev_node.right)
+            new_q = []
+            prev = None
+            for n in q:
+                if prev:
+                    prev.next = n
+                prev = n
+                if n and n.left:
+                    new_q.append(n.left)
+                if n and n.right:
+                    new_q.append(n.right)
+            q = new_q
+        return root

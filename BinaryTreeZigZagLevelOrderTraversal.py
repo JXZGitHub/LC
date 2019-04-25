@@ -5,40 +5,6 @@
 #         self.left = None
 #         self.right = None
 
-class Solution_no_stack:
-    def zigzagLevelOrder(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[int]]
-
-        Time: O(N)
-        Space: O(max nodes at each level), ~O(N)
-        """
-        toRight = False
-        q = []
-        res = []
-        if root:
-            q.append(root)
-        while q:
-            output = []
-            newQ = []
-            for n in q:
-                output.append(n.val)
-            for i in range(len(q) - 1, -1, -1):
-                node = q[i]
-                if toRight:
-                    order = ['left', 'right']
-                else:
-                    order = ['right', 'left']
-                for o in order:
-                    if getattr(node, o):
-                        newQ.append(getattr(node, o))
-            q = newQ
-            toRight = not toRight
-            res.append(output)
-        return res
-
-
 class Solution:
     def zigzagLevelOrder(self, root):
         """
@@ -65,7 +31,7 @@ class Solution:
                 if node.right:
                     s2.append(node.right)
             if output:
-                res.append(output)
+                res.append(output[:])
                 output = []
 
             # A new level begins, s2's content's children will be in s1...
@@ -77,6 +43,6 @@ class Solution:
                 if node.left:
                     s1.append(node.left)
             if output:
-                res.append(output)
+                res.append(output[:])
                 output = []
         return res
