@@ -5,13 +5,10 @@
 #         self.left = None
 #         self.right = None
 class Solution_BFS(object):
-    # Definition for a binary tree node.
-    # class TreeNode(object):
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.left = None
-    #         self.right = None
-
+    """
+    Time: O(N^2)
+    Space: O(N)
+    """
     def diameterOfBinaryTree(self, root):
         """
         :type root: TreeNode
@@ -41,6 +38,11 @@ class Solution_BFS(object):
 
 
 class Solution_DFS(object):
+    """
+    Time: O(N)
+    Space: O(log(N)) on stack frame. O(1) on heap.
+
+    """
     def diameterOfBinaryTree(self, root):
         return self.recurse(root, 0)[1]
 
@@ -48,12 +50,13 @@ class Solution_DFS(object):
         if not root:
             return 0, maxDiameter
 
-            # This part is just finding max depth
+        # This part is just finding max depth
         leftMaxDepth, maxDiameter = self.recurse(root.left, maxDiameter)
         rightMaxDepth, maxDiameter = self.recurse(root.right, maxDiameter)
         maxDepth_from_root = 1 + max(leftMaxDepth, rightMaxDepth)
 
-        # But we also want to keep track of max diameter globally. diameter is sum of left subtree's max depth + right subtree's max depth.
+        # But we also want to keep track of max diameter globally.
+        # diameter is sum of left subtree's max depth + right subtree's max depth.
         maxDiameter_global = max(maxDiameter, leftMaxDepth + rightMaxDepth)
 
         # We return both max_depth from this root, and global max diameter.

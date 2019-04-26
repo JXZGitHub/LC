@@ -17,9 +17,13 @@ class Solution(object):
         intervals.sort(key=lambda x: x.start)
         rooms = [] #Number of rooms needed
         for meeting in intervals:
-            if rooms and meeting.start >= rooms[0]: #If a meeting starts AFTER the meeting end time of the shortest duration's room, then share that same room.
+            if rooms and meeting.start >= rooms[0]:
+                #If a meeting starts AFTER the meeting end time of the shortest duration's room,
+                # then share that same room.
                 heapq.heapreplace(rooms, meeting.end)
-            else: #otherwise, if no room reserved at all or meeting starts BEFORE even the shortest duration end time's room, need a new room
+            else:
+                #otherwise, if no room reserved at all or meeting starts BEFORE even the shortest
+                #duration end time's room, need a new room
                 heapq.heappush(rooms, meeting.end)
         return len(rooms)
 

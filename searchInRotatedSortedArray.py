@@ -11,22 +11,31 @@ class Solution(object):
         Time: O(logN)
         Space: O(1)
         """
-        start = 0
-        end = len(nums) - 1
-        while start <= end:
-            mid = start + (end - start) // 2
-            if nums[mid] == target:
+
+        if not nums:
+            return -1
+
+        low, high = 0, len(nums) - 1
+
+        while low <= high:
+            mid = (low + high) // 2
+            if target == nums[mid]:
                 return mid
-            if nums[mid] >= nums[end]:
-                # Middle point is in the first increasing segment.
-                # >= nums[end] is to handle when there's only 1 element left.
-                if nums[mid] > target >= nums[start]:
-                    end = mid - 1
+            if nums[low] == nums[high]:
+                low -=1
+                continue
+            if nums[low] <= nums[mid]:
+                if nums[low] <= target <= nums[mid]:
+                    high = mid - 1
                 else:
-                    start = mid + 1
-            elif nums[mid] < nums[end]: # Middle point is in the 2nd increasing segment
-                if nums[end] <= target > nums[mid]:
-                    start = mid + 1
+                    low = mid + 1
+            else:
+                if nums[mid] <= target <= nums[high]:
+                    low = mid + 1
                 else:
-                    end = mid - 1
+                    high = mid - 1
+
         return -1
+sol = Solution()
+print (sol.search([3, 1, 2, 3, 3, 3, 3],1))
+

@@ -25,13 +25,13 @@ class Solution(object):
 sol = Solution()
 print (sol.maxProfit([2,1]))
 
-class Solution2:
-    # @param prices, a list of integer
-    # @return an integer
+class Solution2(object):
     # Time: O(N)
     # Space: O(1)
     def maxProfit(self, prices):
-        profit = 0
-        for i in range(len(prices) - 1):
-            profit += max(0, prices[i + 1] - prices[i]) #Just adds ALL profit (greater than 0) from any two consecutive prices.
-        return profit
+        maxP = 0
+        for i in range(0, len(prices) - 1):
+            # Just adds ALL profit (greater than 0) from any two consecutive prices.
+            if prices[i + 1] > prices[i]:
+                maxP += (prices[i + 1] - prices[i])
+        return maxP

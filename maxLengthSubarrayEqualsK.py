@@ -28,6 +28,8 @@ class Solution:
                 if subSum in subSumToIndex:
                     maxLength = max(maxLength, i - subSumToIndex[subSum])
             if currSum not in subSumToIndex:
+                 #If the same subsum appears more than once,
+                #only record only the first (smallest index) to maximize the length.
                 subSumToIndex[currSum] = i
         return maxLength
 
@@ -41,7 +43,12 @@ class Solution:
         Space: O(N)
 
         As you traverse the list, keep a hashmap of the cumulative sum at each index i: {sum:i}.
-        Keep adding each number as you traverse, if the current sum = k, then set max length at that index +1 (must be longer than a previous subarray whose sum was k), if current sum is not k, see if there's was index whose cumulative sum was current sum - k using the hashmap. If there is, we know that at index a, sum was (current sum - k), and at index i, sum is current sum, so all the numbers between a+1 and i will add up to k, thus a new subarray length (index i-index a) may be longer than whatever previous max length is.
+        Keep adding each number as you traverse, if the current sum = k, then set max length at that index +1
+        (must be longer than a previous subarray whose sum was k), if current sum is not k,
+        see if there's was index whose cumulative sum was current sum - k using the hashmap.
+        If there is, we know that at index a, sum was (current sum - k), and at index i,
+        sum is current sum, so all the numbers between a+1 and i will add up to k,
+        thus a new subarray length (index i-index a) may be longer than whatever previous max length is.
         """
         subSumToIndex = {}
         currSum = 0

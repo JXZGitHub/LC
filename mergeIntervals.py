@@ -1,30 +1,31 @@
-# Definition for an interval.
-class Interval(object):
-    def __init__(self, s=0, e=0):
-        self.start = s
-        self.end = e
-
 class Solution(object):
     def merge(self, intervals):
         """
-        :type intervals: List[Interval]
-        :rtype: List[Interval]
+        :type intervals: List[List[int]]
+        :rtype: List[List[int]]
 
-        #Sort all intervals by start, then if an interval's start is more than the previous interval's end,
-        #a new final interval exists, else, you can adjust the previous interval's end, no need to care about start.
+        Sort intervals by starting location smallest first.
+        Then iterate through each interval: keeping track of the current boundaries
+        (curr_s and curr_e) of the 'current' interval (before adding to result).
+
+        The condition for adding is if the latest starting location is > current boundary's
+        ending location.
+
+        If so, add the current boundaries, and update current boundaries to the latest interval and continue.
+        Otherwise, just keep expanding the right boundary of the current interval.
         """
+        res = []
         if not intervals:
-            return []
-        intervals.sort(key=lambda x: x.start)
-        finalIntervals = []
-        for interval in intervals:
-            if not finalIntervals or finalIntervals[-1].end < interval.start:
-                finalIntervals.append(interval)
+            return res
+        intervals = sorted(intervals)
+        curr_s, curr_e = intervals[0]
+        for s, e in intervals:
+            if s > curr_e:
+                res.append([curr_s, curr_e])
+                curr_s = s
+                curr_e = e
             else:
-                finalIntervals[-1].end = max(finalIntervals[-1].end,interval.end)
-
-        return finalIntervals
-
-sol = Solution()
-Interval(1,3), Interval(2,6), Interval(8,10), Interval(15,18)
-print (sol.merge([Interval(1,3), Interval(2,6), Interval(8,10), Interval(15,18)]))
+                curr_e = max(curr_e, e)
+        if curr_s != float('inf') and curr_e != float('-inf'):
+            res.append([curr_s, curr_e])
+        return res
