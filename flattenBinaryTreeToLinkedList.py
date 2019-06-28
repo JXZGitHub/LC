@@ -14,7 +14,8 @@ class Solution:
         Time: (n)
         Space: (1)
 
-        Top down: connect the root's left subtree's right most node to the root's right subtree, then keep doing the same to the root's original left subtree (which is now root.right)
+        Top down: connect the root's left subtree's right most node to the root's right subtree,
+        then keep doing the same to the root's original left subtree (which is now root.right)
 
         """
         curr = root
@@ -35,7 +36,7 @@ class Solution_Recursive:
         :type root: TreeNode
         :rtype: void Do not return anything, modify root in-place instead.
 
-        Time: (nlog(n))
+        Time: (n^2) --> needs to visit every node, and for every node, worst case is visit its right most node.
         Space: (log(n) for balanced tree, n for skewed) on stack frame.
         """
         self.recurse(root)
@@ -57,3 +58,28 @@ class Solution_Recursive:
         if not root.right:
             return root
         return self.rightMostNode(root.right)
+
+
+class Solution_Recursive_Simpler(object):
+    def flatten(self, root):
+        """
+        :type root: TreeNode
+        :rtype: None Do not return anything, modify root in-place instead.
+
+        Time: (n^2) --> needs to visit every node, and for every node, worst case is visit its right most node.
+        Space: (log(n) for balanced tree, n for skewed) on stack frame.
+        """
+        if not root:
+            return None
+        if root.left:
+            self.flatten(root.left)
+        if root.right:
+            self.flatten(root.right)
+        temp = root.right
+        root.right = root.left
+        root.left = None
+
+        # Connect the right subtree's right most node to the origial right node.
+        while root.right:
+            root = root.right
+        root.right = temp

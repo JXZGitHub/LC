@@ -11,6 +11,9 @@ class Solution:
         ["bat"]
     ]
     Note: All inputs will be in lower - case.
+
+    Time: O(len(all chars in strs))
+    Space: O(26 * len(strs))
     """
     def groupAnagrams(self, strs):
         """
@@ -23,7 +26,7 @@ class Solution:
             for c in s:
                 count[ord(c)-ord('a')] +=1
             anagrams[tuple(count)].append(s)
-        return list(anagrams.values())
+        return anagrams.values()
 
     def groupAnagrams_sort(self, strs):
        """

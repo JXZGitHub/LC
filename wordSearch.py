@@ -1,38 +1,32 @@
-class Solution(object):
+class Solution:
     def exist(self, board, word):
         """
         :type board: List[List[str]]
         :type word: str
         :rtype: bool
         """
-        # visited =[ [ False for _ in range(len(board[0])) ]\
-        #           for _ in range(len(board)) ]
-
-        if not board:
-            return False
-
-        for row in range(len(board)):
-            for col in range(len(board[row])):
-                res = self.dfs(board, row, col, word, 0)
-                if res:
+        visited=set()
+        for r in range(len(board)):
+            for c in range(len(board[r])):
+                if self.recurse(r, c, board, 0, visited, word):
                     return True
         return False
 
-    def dfs(self, board, row, col, word, count):
-        if row > len(board) - 1 or col > len(board[0]) - 1 or row < 0 or col < 0 or board[row][col] == '*' or \
-                board[row][col] != word[count]:
+    def recurse(self, r, c, matrix, index, visited, target):
+        if (r,c) in visited or not (0 <= r < len(matrix) and 0 <= c < len(matrix[r])):
             return False
-        if count == len(word) - 1:
-            return True #If the previous conditions didn't return False, and you made it to the same length as word, then it's a match
-        original = board[row][col]
-        board[row][col] = '*' #Use '*' to denote visited to avoid repeating same letter during the same search.
-        res = self.dfs(board, row + 1, col, word, count + 1) or \
-              self.dfs(board, row - 1, col, word, count + 1) or \
-              self.dfs(board, row, col + 1, word, count + 1) or \
-              self.dfs(board, row, col - 1, word, count + 1)
-
-        board[row][col] = original #Restore to be 'unvisited' once all the search from the current cell terminates.
-        return res
+        if matrix[r][c] != target[index]:
+            return False
+        if index == len(target) - 1:
+            return True
+        visited.add((r,c))
+        for dr, dc in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+            newR = r + dr
+            newC = c + dc
+            if self.recurse(newR, newC, matrix, index + 1, visited, target):
+                return True
+        visited.remove((r,c))
+        return False
 
     # def dfs(self, board, row, col, word):
     #     if len(word) == 0:

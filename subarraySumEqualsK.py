@@ -14,8 +14,7 @@ class Solution:
         If the latest cumulative sum is S, and there already exists previous cumulative sum of S-k,
         then there must be X ways to add to S, where X is the number of occurences of S-k seen before.
         """
-        cumSum_to_freq = collections.defaultdict(
-            int)  # Number of occurences of a given cumulative (continuous subarray) sum
+        cumSum_to_freq = collections.defaultdict(int)  # Number of occurences of a given cumulative (continuous subarray) sum
         cumSum_to_freq[0] = 1  # Any subarray that adds to K will automatically count towards AT LEAST one result.
         cumSum = 0
         res = 0

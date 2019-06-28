@@ -86,4 +86,4 @@ class Solution_slower:
 
 
 sol = Solution()
-print (sol.multiply('9','0'))
+print (sol.multiply('99','99'))

@@ -32,3 +32,6 @@ class Solution(object):
         #Otherwise, keep adding ( or ) respectively and go deeper.
         self.generateAll(leftRem - 1, rightRem, string + '(', res)
         self.generateAll(leftRem, rightRem - 1, string + ')', res)
+
+sol=Solution()
+print (sol.generateParenthesis(3))
