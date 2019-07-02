@@ -33,67 +33,30 @@ class Solution2(object):
     Iterative: use a BFS (queue) to traverse all nodes from root and build a {node:parent} dict. Then add each
     ancestor of p (including p itself) into a set, and see if q's ancestors are in the set. As soon as one of q's ancestors
     is in the set, return q.
+    Time: O(N)
+    Space: O(N)
     '''
-    def lowestCommonAncestor(self, root, p, q):
-        queue = deque()
-        if not root:
-            return None
-        if root == p or root == q:
-            return root
-        parents = {root: None}
-        queue.append(root)
-        while queue:
-            node = queue.popleft()
-            if node.left:
-                parents[node.left] = node
-                queue.append(node.left)
-            if node.right:
-                parents[node.right] = node
-                queue.append(node.right)
-
-        ancestors = set()
-        while p:
-            ancestors.add(p)
-            p = parents[p]
-
-        while q not in ancestors:
-            q = parents[q]
-
-        return q
-
-class Solution3(object):
-    '''
-       Iterative: use a DFS (stack) to traverse all nodes from root and build a {node:parent} dict. Then add each
-       ancestor of p (including p itself) into a list (can be a set too),
-       and see if q's ancestors are in the set. As soon as one of q's ancestors
-       is in the list (or set), return q.
-       '''
-
-    def lowestCommonAncestor(self, root, A, B):
-        # write your code here
-        stack = []
-        parents = {}
-        a_ancestors = []
-        while root or stack:
-            if root:
-                stack.append(root)
-                if root.left:
-                    parents[root.left] = root
-                root = root.left
-
-            else:
-                root = stack.pop()
-                if root.right:
-                    parents[root.right] = root
-                root = root.right
-
-        while A:
-            a_ancestors.append(A)
-            A = parents.get(A)
-
-        while B:
-            if B in a_ancestors:
-                return B
-            B = parents.get(B)
-
+    if not root:
         return None
+    queue = [root]
+    parents = {}
+    while queue:
+        new_q=[]
+        for n in queue:
+            if n.left:
+                new_q.append(n.left)
+                parents[n.left] = n
+            if n.right:
+                new_q.append(n.right)
+                parents[n.right] = n
+        queue = new_q
+
+    p_ancestors = set()
+    while p:
+        p_ancestors.add(p)
+        p = parents.get(p)
+
+    while q and q not in p_ancestors:
+        q = parents.get(q)
+
+    return q

@@ -39,28 +39,26 @@ class Solution:
         return res
 
 
-class Solution:
+class Solution(object):
     def rightSideView(self, root):
         """
         :type root: TreeNode
         :rtype: List[int]
 
-        BFS
         Time: O(N)
-        Space: O(N)
+        Space: (Max of 2 children per node as it's a binary tree)
         """
+        q = []
+        if root:
+            q.append(root)
         res = []
-        if not root:
-            return res
-        q = collections.deque()
-        q.append(root)
         while q:
-            for _ in range(len(q)):
-                node = q.popleft()
-                if node.left:
-                    q.append(node.left)
-                if node.right:
-                    q.append(node.right)
-            res.append(node.val)
-
+            new_q = []
+            res.append(q[-1].val)
+            for n in q:
+                if n.left:
+                    new_q.append(n.left)
+                if n.right:
+                    new_q.append(n.right)
+            q = new_q
         return res

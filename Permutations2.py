@@ -22,8 +22,9 @@ class Solution(object):
             for i in range(0, len(nums)):
                 if currentIndices.get(i) or \
                   (i > 0 and nums[i - 1] == nums[i] and not currentIndices.get(i - 1)):
-                    #Avoid duplicate permutations by
-                    #pruning any duplicate that are not already in a permutation 'in progress')
+                    # This indicates a duplicate number (sorted) and its previous
+                    # duplicate was already used because its previous duplicate(i-1) was
+                    # NOT part of the current recursion (not in currentIndices).
                     continue
                 currentIndices[i] = True
                 output.append(nums[i])
