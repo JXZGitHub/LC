@@ -74,4 +74,4 @@ class Solution:
 
 sol = Solution()
 print (sol.subsets_recursive([1,2,3]))
-print (sol.subsets_iterative([1,2,3]))
+#print (sol.subsets_iterative([1,2,3]))

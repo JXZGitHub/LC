@@ -8,6 +8,7 @@ class Solution:
         ")(" -> [""]
 
         O: n*C(n,n)+(n-1)*C(n,n-1)....+1*C(n,1) = n*2^(n-1).
+         #similar to power set, each char is either included or not, so 2^n, and there's a valid() check each time. So its n*(2^n)
         Space complexity: same???
 
     '''
