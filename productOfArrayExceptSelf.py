@@ -23,4 +23,5 @@ class Solution:
 
         return res
 
-
+sol = Solution()
+print (sol.productExceptSelf([1,2,3,4]))

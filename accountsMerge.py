@@ -19,10 +19,11 @@ class Solution:
         merged = collections.defaultdict(set)
         results = []
 
+        #initialize
         for acc in accounts:
             for i in range(1, len(acc)):
-                owners[acc[i]] = acc[0]
-                parents[acc[i]] = acc[i]
+                owners[acc[i]] = acc[0] # Map every email to its user
+                parents[acc[i]] = acc[i] #Initialize union find data structure to have every node be its own parent
 
         for acc in accounts:
             p = self.find(acc[1], parents)  # Find parent of the first email in the list.
@@ -48,3 +49,7 @@ class Solution:
         if node != parents[node]:
             parents[node] = self.find(parents[node], parents)
         return parents[node]
+
+
+
+

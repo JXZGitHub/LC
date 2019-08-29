@@ -25,13 +25,11 @@ class Solution:
         """
         q = deque()
         origToCopy = {}
-        head = None
 
         # Append initial node into queue and set the head to its value.
         if node:
             q.append(node)
             origToCopy[node] = UndirectedGraphNode(node.label)
-            head = origToCopy[node]
 
         while q:
             orig = q.popleft()  # This popped of node must have already been created in dict.
@@ -43,4 +41,4 @@ class Solution:
                 origToCopy[orig].neighbors.append(origToCopy[nb])
                 # Now the original's neighbor must exist in dict's values, so append it to the current cloned node's neighbor.
 
-        return head
+        return origToCopy[node]

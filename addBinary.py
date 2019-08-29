@@ -1,3 +1,4 @@
+import collections
 class Solution:
     def addBinary(self, a, b):
         """
@@ -8,7 +9,7 @@ class Solution:
         Space: O(1)
         """
         carry = 0
-        res = ''
+        res = collections.deque()
         for i in range(max(len(a),len(b))):
             val = carry  #Initialize value of current position with previously generated carry
             if i < len(a):
@@ -16,8 +17,8 @@ class Solution:
             if i < len(b):
                 val += int(b[-(i+1)]) #Start with the last digit
             carry = val // 2
-            val = val % 2
-            res += str(val)
+            val = val % 2 #or: carry,val = divmod(val,2)
+            res.appendleft(str(val))
         if carry:
-            res += str(carry)
+            res.appendleft(str(carry))
         return res[::-1]

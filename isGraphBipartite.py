@@ -73,8 +73,7 @@ class Solution_BFS:
             q.append(i)
             while q:
                 node = q.popleft()
-                for neighbor in graph[
-                    node]:  # Compare all of its neighbor, either color it if uncoored, or compare if the neighbor is same color as itself.
+                for neighbor in graph[node]:  # Compare all of its neighbor, either color it if uncoored, or compare if the neighbor is same color as itself.
                     if neighbor not in nodeColor:
                         nodeColor[neighbor] = -nodeColor[node]
                         q.append(neighbor)
@@ -83,3 +82,6 @@ class Solution_BFS:
                             return False
 
         return True
+
+sol = Solution_BFS()
+print (sol.isBipartite( [[1,3], [0,2], [1,3], [0,2]]))

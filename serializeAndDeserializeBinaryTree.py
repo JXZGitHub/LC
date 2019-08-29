@@ -15,18 +15,18 @@ class Codec:
         :rtype: str
         Time: O(N), N is number of nodes in tree
         Space: O(H), H is height of tree
+
+        Recursive preorder traversal.
         """
         treeString = []
         self.convertToStr(root, treeString)
-        return ''.join(treeString)
+        return ','.join(treeString)
 
     def convertToStr(self, node, treeString):
         if not node:
             treeString.append('X')
-            treeString.append(',')
         else:
             treeString.append(str(node.val))
-            treeString.append(',')
             self.convertToStr(node.left, treeString)
             self.convertToStr(node.right, treeString)
 

@@ -1,55 +1,43 @@
 import heapq
-from collections import Counter
+import collections
 
-class Solution:
-    """
-    Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different letters
-    represent different tasks.Tasks could be done without original order.
-    Each task could be done in one interval.
-    For each interval, CPU could finish one task or just be idle. However, there is a non-negative cooling interval n
-    that means between two same tasks, there must be at least n intervals that CPU are doing different tasks or
-    just be idle.
 
-    You need to return the least number of intervals the CPU will take to finish all the given tasks.
-    Example 1:
-    Input: tasks = ["A","A","A","B","B","B"], n = 2
-    Output: 8
-    Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
-
-    Finish highest frequency tasks first, by diversifying the tasks as much as possible.
-
-    Time: L+L*logL+L*(n+n*L*LogL) ?????
-    Space: O(1), there can be a maximum length of 26 in the queue, as there are only 26 letters in the alphabet.
-
-    """
+class Solution(object):
     def leastInterval(self, tasks, n):
         """
         :type tasks: List[str]
         :type n: int
         :rtype: int
-        """
-        taskCount = Counter(tasks)
-        q = [-1 * v for v in taskCount.values()]
-        heapq.heapify(q)
-        cycles = n + 1 # a job + N idle cycles
-        res = 0
-        while q:
-            temp = []
-            count = 0
-            for _ in range(cycles): #Each iteration in cycle represents a single cpu cycle (ie, a job + N idle cycles )
-                if q:
-                    temp.append(-1 * heapq.heappop(q)) #Temp stores the remaining number of times each job has.
-                    count += 1 #As long as q is not empty, keeps counting until (job + N idle cycles).
-                               #else stops counting as there's fewer jobs than cycles left.
-            for t in temp:
-                t -= 1 #Subtracts once for each job as it was used in the previous loop (picked to be in a cycle)
-                if t > 0:
-                    heapq.heappush(q, -1 * t) #If there's till more jobs fore ach task, put it back on queue)
 
-            if q:
-                res += cycles #If more jobs in queue, it means the full cycle was used, so count it.
+        Time: O(n) #heappush is log(len(tasks)), but there can be maximum of 26 (letters in alphabet) tasks. So it's log(26) a constant.
+        Space: O(len(tasks)) ==> O(1), at most 26 so constant again.
+        """
+        cycles = n + 1
+        task_counter = collections.Counter(tasks)  # len(task_counter) is number of differnet tasks.
+        res = 0
+        q = []
+        for count in task_counter.values():
+            heapq.heappush(q, -count)
+
+        while q:  # If there are tasks remaining
+            tasks_executed = 0
+            tasks_counts = []
+            for _ in range(cycles):
+                if q: #if q has less than cycles of jobs left, then there might be padding with idle cycles.
+                    tasks_counts.append(-heapq.heappop(q))
+                    tasks_executed += 1
+
+            # At this point, tasks_executed is <= cycles.
+            for count in tasks_counts:
+                count -= 1
+                if count:
+                    heapq.heappush(q, -count)  # if there are still remaining count of this task, put back to q.
+
+            if q:  # If still remaiing tasks to be executed, then the most recent cycle was fully populated (either with all tasks or some idles):
+                res += cycles
             else:
-                res += count #else, it means there were fewer jobs than cycle remaining, so just count the number of jobs picked.
+                res += tasks_executed  # Else, whatever remaining tasks (popped from q) can fit int the current cycle fine, and we end here.
+
         return res
 
 sol = Solution()
