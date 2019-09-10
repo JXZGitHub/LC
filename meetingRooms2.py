@@ -27,36 +27,23 @@ class Solution(object):
                 heapq.heappush(rooms, meeting.end)
         return len(rooms)
 
-    def minMeetingRooms_no_heap(self, intervals):
-        """
-        :type intervals: List[Interval]
-        :rtype: int
-        Time: O(n Logn)
-        Space: O(2n)
-        """
-        start, end = [], []
-        for i in intervals:
-            start.append(i.start)
-            end.append(i.end)
-
-        start.sort()
-        end.sort()
-
-        s,e=0,0
-        room_in_use = 0
-        min_room_used = 0
-        while s<len(start):
-            if start[s] < end[e]:
-                room_in_use += 1
-                min_room_used = max(min_room_used,room_in_use)
-                s+=1
-            else:
-                room_in_use -=1
-                e+=1
-        return min_room_used
-
-
-
+    class Solution_no_heap(object):
+        def minMeetingRooms(self, intervals):
+            """
+            :type intervals: List[List[int]]
+            :rtype: int
+            """
+            starts = sorted(i[0] for i in intervals)
+            ends = sorted(i[1] for i in intervals)
+            e = 0
+            i = 0
+            rooms = 0
+            for s in starts:
+                if s >= ends[e]:
+                    e += 1
+                else:
+                    rooms += 1
+            return rooms
 
 sol = Solution()
 print (sol.minMeetingRooms([Interval(0,30),Interval(5,10),Interval(15,20)]))

@@ -1,4 +1,40 @@
-class Solution:
+import collections
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        t_map = collections.Counter(t)
+        counter = len(t)
+        begin, end = 0, 0
+        d = float('inf')
+        head = 0
+        while end < len(s):
+            if t_map.get(s[end], 0) > 0:
+                counter -= 1
+            if s[end] in t_map:
+                t_map[s[end]] -= 1
+            end += 1
+            while counter == 0:
+                if end - begin < d:
+                    d = end - begin
+                    head = begin
+                if s[begin] in t_map:
+                    t_map[s[begin]] += 1
+                    if t_map.get(s[begin], 0) > 0:
+                        counter += 1
+                begin += 1
+        if d == float('inf'):
+            return ''
+        else:
+            return s[head:head + d]
+
+sol = Solution()
+print (sol.minWindow("AAABC","ABC"))
+
+class Solution2:
     def minWindow(self, s, t):
         """
         :type s: str

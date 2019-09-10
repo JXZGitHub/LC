@@ -19,7 +19,8 @@ class Solution(object):
         else:
             for i in range(startPos, len(num)):
                 if num[startPos] == '0' and i != startPos:
-                    break  # prevent number with leading zeroes being used as an item.
+                    break  # prevent number with leading zeroes being used as an item:
+                           # eg, if nums= 1023, 0 can be used as a single item, but not 02, 023)
                 currItem = int(''.join(num[startPos:i + 1]))
                 if startPos == 0:
                     path.append(str(currItem))
@@ -42,3 +43,5 @@ class Solution(object):
                     path.pop()
                     path.pop()
 
+sol = Solution()
+print (sol.addOperators("134", 12))

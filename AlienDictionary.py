@@ -1,4 +1,6 @@
 from collections import deque
+
+
 class Solution(object):
     '''
     0) Go through each word in order, and build a DAG (Direct acyclic graph),
@@ -21,7 +23,7 @@ class Solution(object):
         for i in range(1, len(words)):
             if len(words[i - 1]) > len(words[i]) and \
                     words[i - 1][:len(words[i])] == words[i]:
-                return "" #Finds invalid sorting
+                return ""  # Finds invalid sorting
 
             self.findChildren(words[i - 1], words[i], children)
 
@@ -35,7 +37,6 @@ class Solution(object):
 
         return ''.join(result)
 
-
     # Construct the graph, by finding first differt pair of letters in 2 neighboring words in ordering.
     def findChildren(self, word1, word2, children):
         min_len = min(len(word1), len(word2))
@@ -48,16 +49,17 @@ class Solution(object):
     def topSortDFS(self, node, children, visited, result):
         if visited.get(node) == 'Permanent':
             return True
-        if visited.get(node) == 'Temporary': #Cycle detected
+        if visited.get(node) == 'Temporary':  # Cycle detected
             return False
         visited[node] = 'Temporary'
         for childNode in children[node]:
-            if not self.topSortDFS(childNode,children,visited,result):
+            if not self.topSortDFS(childNode, children, visited, result):
                 return False
 
         visited[node] = 'Permanent'
         result.appendleft(node)
         return True
 
+
 sol = Solution()
-print (sol.alienOrder(['wrt','wrf','er','ett','rftt']))
+print(sol.alienOrder(['wrt', 'wrf', 'er', 'ett', 'rftt']))

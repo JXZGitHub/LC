@@ -3,8 +3,31 @@
 # @return an integer
 # def read4(buf):
 
-
 class Solution(object):
+
+    def read(self, buf, n):
+        """
+        Same solution as multiple call version.
+
+        :type buf: Destination buffer (List[str])
+        :type n: Number of characters to read (int)
+        :rtype: The number of actual characters read (int)
+        """
+        buffer = [None] * 4  # This buffer is persisted call to call
+        locationInBuffer = 0  # The location in the current read4 buffer (ie, number of bytes that has been flushed)
+        read4CharsRead = 0  # Number of chars read each time read4() is called.
+
+        for i in range(n):
+            if locationInBuffer == read4CharsRead:
+                read4CharsRead = read4(buffer)
+                locationInBuffer = 0
+                if not read4CharsRead:
+                    return i
+            buf[i] = buffer[locationInBuffer]
+            locationInBuffer += 1
+        return n
+
+class Solution2(object):
     def read(self, buf, n):
         """
         :type buf: Destination buffer (List[str]) #IMPORTANT: Buf is where the whatever is read is stored.

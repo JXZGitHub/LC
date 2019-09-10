@@ -41,8 +41,10 @@ class Solution:
             if self.valid(t):
                 res.append(t)
                 found = True
+                continue
             if found:
                 continue
+                #If at any given level of BFS, there was already a valid substring, don't remove more parens as we are removing MINIMUM parens.
             for i, n in enumerate(t):
                 if n not in ('(', ')'):
                     continue
@@ -51,3 +53,6 @@ class Solution:
                     visited.add(x)
                     q.append(x)
         return res
+
+sol = Solution()
+print (sol.removeInvalidParentheses("()())()"))
