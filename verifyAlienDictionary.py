@@ -17,8 +17,8 @@ class Solution(object):
         words_value = [[order_dict[c] for c in w] for w in words]  # O(len(total chars in all words))
         # convert each word into a list of 'ordering' value: ['apple','app'] => [[1,2,3,4,5],[1,2,3]]
 
-        for i, w in enumerate(words_value[1:], 1):  # O(len(total chars in all words))
-            if w < words_value[i - 1]:
+        for i in range(1,len(words_value)):  # O(len(total chars in all words))
+            if words_value[i] < words_value[i - 1]:
                 return False
         return True
 

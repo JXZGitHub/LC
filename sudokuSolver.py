@@ -1,3 +1,43 @@
+class Solution2(object):
+    def solveSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: None Do not return anything, modify board in-place instead.
+        """
+        print (board)
+        self.recurse(board, 0, 0)
+        print (board)
+
+    def recurse(self, board, row, col):
+        if col == len(board[0]):
+            col = 0
+            row += 1
+        for r in range(row, len(board)):
+            for c in range(col, len(board[0])):
+                if board[r][c] != '.':
+                    continue
+                for i in range(1, 10):
+                    if self.valid(board, r, c, str(i)):
+                        board[r][c] = str(i)
+                        if self.recurse(board, row, col + 1):
+                            return True
+                        board[r][c] = '.'
+                return False
+        return True
+
+    def valid(self, board, row, col, char):
+        for i in range(9):
+            if board[row][i] == char or board[i][col] == char:
+                return False
+        rowOffset = row - row % 3
+        colOffset = col - col % 3
+        for r in range(3):
+            for c in range(3):
+                if board[r + rowOffset][c + colOffset] == char:
+                    return False
+        return True
+
+
 class Solution:
     def solveSudoku(self, board):
         """
@@ -13,6 +53,7 @@ class Solution:
         When all cells are filled with legal values, the solution is found.
         """
         self.traverse(0, 0, board)
+        pass
 
     def isLegal(self, r, c, board, item):
 
@@ -44,3 +85,14 @@ class Solution:
                     return True
                 board[r][c] = '.'
         return False
+
+sol = Solution2()
+print (sol.solveSudoku([["5","3",".",".","7",".",".",".","."],
+                        ["6",".",".","1","9","5",".",".","."],
+                        [".","9","8",".",".",".",".","6","."],
+                        ["8",".",".",".","6",".",".",".","3"],
+                        ["4",".",".","8",".","3",".",".","1"],
+                        ["7",".",".",".","2",".",".",".","6"],
+                        [".","6",".",".",".",".","2","8","."],
+                        [".",".",".","4","1","9",".",".","5"],
+                        [".",".",".",".","8",".",".","7","9"]]))

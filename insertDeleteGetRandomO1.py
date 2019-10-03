@@ -40,8 +40,9 @@ class RandomizedSet:
         pos = self.hashmap[val]  # Location of the item to be deleted.
         lastItem = self.nums[-1]  # Content of last item
 
-        self.nums[pos] = lastItem  # Overwrite the item to the the last item in the list.
-        self.hashmap[lastItem] = pos  # Update hashmap so the last item points to where the deleted item was.
+        if val != lastItem:  # No need to perform index re-assignment and hash replacement if deleted item is same as last item
+            self.nums[pos] = lastItem  # Overwrite the item to the the last item in the list.
+            self.hashmap[lastItem] = pos  # Update hashmap so the last item points to where the deleted item was.
 
         self.nums.pop()  # Get rid of last item in array, O(1)
         del self.hashmap[val]  # Get rid of last item in dict, O(1)

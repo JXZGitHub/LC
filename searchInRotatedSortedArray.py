@@ -18,24 +18,30 @@ class Solution(object):
         low, high = 0, len(nums) - 1
 
         while low <= high:
-            mid = (low + high) // 2
+            mid = low + (high - low) // 2
+
+            # Explict checking if target mtaches the 3 known points
             if target == nums[mid]:
                 return mid
-            if nums[low] == nums[high]:
-                low -=1
-                continue
-            if nums[low] <= nums[mid]:
-                if nums[low] <= target <= nums[mid]:
+            if target == nums[low]:
+                return low
+            if target == nums[high]:
+                return high
+
+            if nums[low] <= nums[mid]:  # If mid is in the first increasnig subarray
+                # Regular binary search
+                if nums[low] < target < nums[mid]:
                     high = mid - 1
                 else:
                     low = mid + 1
-            else:
-                if nums[mid] <= target <= nums[high]:
+            elif nums[low] >= nums[mid]:  # If mid is in the 2nd increasing subarray (ie, every element in 2nd subarray is < than first subarray)
+                # Regular binary search
+                if nums[mid] < target < nums[high]:
                     low = mid + 1
                 else:
                     high = mid - 1
 
         return -1
 sol = Solution()
-print (sol.search([3, 1, 2, 3, 3, 3, 3],1))
+print (sol.search([4,5,6,7,0,1,2],3))
 

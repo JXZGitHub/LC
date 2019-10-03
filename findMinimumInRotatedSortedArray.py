@@ -28,4 +28,4 @@ class Solution:
             elif n < nums[start]:
                 end = mid  # We are in the 2nd increasing segment (every element of it is smaller than first), search in 2nd half but INCLUDING the current mid point as that might just be the minimum itself.
 
-        return nums[start - 1]  # if this loop exists, start would be 1 over the boundary of the array.
+        return nums[start - 1]  # if this loop exits, start would be 1 over the boundary of the array.

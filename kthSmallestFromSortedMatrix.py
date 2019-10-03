@@ -50,7 +50,7 @@ class Solution_heap(object):
     Then start popping off each element (min) and replace with the next item in its row, do that k times.
     The last popped off element is the kth largest.
 
-    Time: O(n*log(k)), where n is the number of rows in matrix.
+    Time: O(k*log(n)), where n is the number of rows in matrix.
     Space: O(n)
     """
 

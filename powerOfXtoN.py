@@ -93,7 +93,10 @@ class Solution_iterative:
                 res = res * x
             x = x*x
             i = i // 2
-        return res if n>=0 else 1.0/res
+        return res
 
 sol = Solution_iterative()
-print (sol.power(2,8))
+print (sol.myPow(2,9))
+
+#sol = Solution()
+#print (sol.myPow(2, 5))

@@ -22,7 +22,10 @@ class Solution(object):
     def dfs(self, root, maxSum):
         if not root:
             return 0
-        leftMaxSum = max(self.dfs(root.left, maxSum), 0) #Don't contribute negative to sum
-        rightMaxSum = max(self.dfs(root.right, maxSum), 0)
-        maxSum[0] = max(maxSum[0], root.val + leftMaxSum + rightMaxSum)
-        return root.val + max(leftMaxSum, rightMaxSum)
+        leftMaxSum = self.recurse(root.left, maxSum)
+        rightMaxSum = self.recurse(root.right, maxSum)
+
+        maxSum[0] = max(maxSum[0], root.val + leftMaxSum + rightMaxSum)  # global max sum
+
+        return max(root.val + max(leftMaxSum, rightMaxSum),  0)
+        # returned as the left or right subtree's maxSum to the previous call stack, which means we can't add BOTH subtree's max sum because that is not a 'path' when viewed from its parent node. Also we use max(..,0) to ensure no negative contribution to global max sum (reducing it)

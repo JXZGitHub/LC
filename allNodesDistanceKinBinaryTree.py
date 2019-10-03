@@ -13,7 +13,7 @@ class Solution:
         :type K: int
         :rtype: List[int]
 
-        Time: O(N+K), where N is number of nodes in tree.
+        Time: O(N+K*N), where N is number of nodes in tree.
         Space: O(max(log(N), K)) on stack. O(N) on heap.
         """
         # DFS to create a undirected graph keep tracking of all connected nodes: parent->child and child->parent
