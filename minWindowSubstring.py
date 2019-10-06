@@ -6,33 +6,40 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        t_map = collections.Counter(t)
-        counter = len(t)
-        begin, end = 0, 0
-        d = float('inf')
-        head = 0
-        while end < len(s):
-            if t_map.get(s[end], 0) > 0:
-                counter -= 1
-            if s[end] in t_map:
-                t_map[s[end]] -= 1
-            end += 1
-            while counter == 0:
-                if end - begin < d:
-                    d = end - begin
-                    head = begin
-                if s[begin] in t_map:
-                    t_map[s[begin]] += 1
-                    if t_map.get(s[begin], 0) > 0:
-                        counter += 1
-                begin += 1
-        if d == float('inf'):
+        tMap = collections.Counter(t)  # char:frequency of the substring. Represents how may chars we still need to see for each char
+        start = 0
+        min_start_index = 0
+        min_len = float('inf')
+        i = 0
+        needChars = len(t)
+        while i < len(s):
+            char = s[i]
+            if char in tMap:
+                tMap[char] -= 1
+                if tMap[
+                    char] >= 0:  # Anything <0 means we are seeing more chars than in the target substring, so it's redundant
+                    needChars -= 1
+            i += 1
+            while needChars == 0:  # current window includes all needed chars, try to move start to the right
+                if i - start < min_len:
+                    min_len = i - start
+                    min_start_index = start
+                startChar = s[start]
+                if startChar in tMap:
+                    tMap[startChar] += 1  # Skipping over needed char
+                    if tMap[
+                        startChar] > 0:  # No more such char left in the window, so now the new window (starting at start+1) will be missing this char
+                        needChars += 1
+
+                start += 1
+
+        if min_len == float('inf'):
             return ''
         else:
-            return s[head:head + d]
+            return s[min_start_index:min_start_index + min_len]
 
 sol = Solution()
-print (sol.minWindow("AAABC","ABC"))
+print (sol.minWindow("a","aa"))
 
 class Solution2:
     def minWindow(self, s, t):

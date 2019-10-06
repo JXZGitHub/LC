@@ -1,32 +1,30 @@
-class Solution:
+class Solution(object):
     def decodeString(self, s):
         """
         :type s: str
         :rtype: str
 
-        Time: O(n)
-        Space: O(n)
+        Time: O( max of K * N)
+        Space: (N)
         """
         stack = []
-        res = ''
-        temp_res = ''
+        currStr = []
         m = 0
-        for i in s:
-            if i.isdigit():
-                m = m * 10 + int(i)
-            elif i not in ('[', ']'):
-                temp_res += i
-            elif i == '[':
-                stack.append(temp_res)
+        for c in s:
+            if c.isdigit():
+                m = m * 10 + int(c)
+            elif c not in ('[', ']'):  # Is string
+                currStr.append(c)
+            elif c == '[':
+                stack.append(currStr)
                 stack.append(m)
-                temp_res = ''  # Reset
-                m = 0  # Reset
-            elif i == ']':
-                prev_m = stack.pop()
-                prev_res = stack.pop()
-                res = prev_res + temp_res * prev_m
-                temp_res = res  # Do not reset temp_res until a ']' is seen
-        return temp_res  # Takes care of single letters
+                m = 0
+                currStr = []
+            elif c == ']':
+                prevM = stack.pop()
+                prevStr = stack.pop()
+                currStr = prevStr + currStr * prevM
+        return ''.join(currStr)
 
 
 sol = Solution()

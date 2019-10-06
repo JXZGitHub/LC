@@ -24,4 +24,4 @@ class Solution:
         return sum(stack)
 
 sol = Solution()
-print (sol.calculate('1+2*3+5'))
+print (sol.calculate('10-5'))

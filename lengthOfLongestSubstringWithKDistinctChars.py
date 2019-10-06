@@ -1,3 +1,4 @@
+import collections
 class Solution(object):
     def lengthOfLongestSubstringKDistinct(self, s, k):
         """
@@ -34,3 +35,6 @@ class Solution(object):
             res = max(res, right - left + 1)
             right += 1
         return res
+
+sol = Solution()
+print (sol.lengthOfLongestSubstringKDistinct2("eceba",2))

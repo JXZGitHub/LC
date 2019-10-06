@@ -53,3 +53,6 @@ class Solution_iterative:
                 prevSign = '+'
             i+=1
         return res
+
+sol = Solution_iterative()
+print (sol.calculate('1+2-3'))
