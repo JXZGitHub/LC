@@ -35,7 +35,6 @@ class Solution:
                 root = root.left
             else:
                 root = stack.pop()
-                allNodes.append(root.val)
                 root = root.right
         return allNodes
 

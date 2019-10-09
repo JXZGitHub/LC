@@ -1,19 +1,17 @@
-# class Solution:
-#     def isMatch(self, s, p):
-#         """
-#         :type s: str
-#         :type p: str
-#         :rtype: bool
-#         """
-#         # if not s:
-#         #     return False
-#         if not p:
-#             return not s  # If p is empty, s has to be empty to match
-#         elif len(p) > 1 and p[1] == '*':
-#             return self.isMatch(s, p[2:]) or ( (bool(s) and (s[0] == p[0] or p[0] == '.')) and self.isMatch(s[1:], p) )
-#         else:
-#             return bool(s) and (s[0] == p[0] or p[0] == '.') and self.isMatch(s[1:], p[1:])
 class Solution:
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        if not p:
+            return not s  # If p is empty, s has to be empty to match
+        elif len(p) > 1 and p[1] == '*':
+            return self.isMatch(s, p[2:]) or ( (bool(s) and (s[0] == p[0] or p[0] == '.')) and self.isMatch(s[1:], p) )
+        else:
+            return bool(s) and (s[0] == p[0] or p[0] == '.') and self.isMatch(s[1:], p[1:])
+class Solution2:
     def isMatch(self, s, p):
         m, n = len(s), len(p)
         f = [[False] * (n + 1) for _ in range(m + 1)]
@@ -33,4 +31,4 @@ class Solution:
 
 
 sol = Solution()
-print (sol.isMatch('','a*b*'))
+print (sol.isMatch('a','a*'))

@@ -1,64 +1,51 @@
-from collections import deque
-
+import collections
 
 class Solution(object):
-    '''
-    0) Go through each word in order, and build a DAG (Direct acyclic graph),
-       where each node is a letter, and edge betewwen u->v means u comes before v.
-    2) Perform a DFS based Topological sort on the graph.
-    '''
-
     def alienOrder(self, words):
         """
         :type words: List[str]
         :rtype: str
         """
-        # Find ancestors of each node by DFS.
-        nodes, children = set(), {}
-        for i in range(len(words)):
-            for c in words[i]:
-                nodes.add(c)
-        for node in nodes:
-            children[node] = []
-        for i in range(1, len(words)):
-            if len(words[i - 1]) > len(words[i]) and \
-                    words[i - 1][:len(words[i])] == words[i]:
-                return ""  # Finds invalid sorting
+        graph = collections.defaultdict(list)
+        for w in words:
+            for c in w:
+                graph[c] = []  # Must include every letter in the final result.
 
-            self.findChildren(words[i - 1], words[i], children)
+        for i, w in enumerate(words):
+            if i > 0:
+                self.updateGraph(graph, words[i - 1], w)  # Extract a single rule from a pair of words
 
-        # Output topological order by DFS.
-        result = deque()
+        res = collections.deque()
         visited = {}
-        for node in nodes:
+
+        for node in graph:
             if visited.get(node) != 'Permanent':
-                if not self.topSortDFS(node, children, visited, result):
+                if not self.topoSort(node, graph, visited, res):
                     return ''
 
-        return ''.join(result)
+        return ''.join(res)
 
-    # Construct the graph, by finding first differt pair of letters in 2 neighboring words in ordering.
-    def findChildren(self, word1, word2, children):
-        min_len = min(len(word1), len(word2))
-        for i in range(min_len):
-            if word1[i] != word2[i]:
-                children[word1[i]].append(word2[i])
-                break
-
-    # Topological sort, return True with sorting in results if no cycle. Otherwise return True
-    def topSortDFS(self, node, children, visited, result):
-        if visited.get(node) == 'Permanent':
+    def topoSort(self, node, graph, visited, res):
+        if visited.get(node) == 'P':
             return True
-        if visited.get(node) == 'Temporary':  # Cycle detected
+        if visited.get(node) == 'T':
             return False
-        visited[node] = 'Temporary'
-        for childNode in children[node]:
-            if not self.topSortDFS(childNode, children, visited, result):
-                return False
-
-        visited[node] = 'Permanent'
-        result.appendleft(node)
+        visited[node] = 'T'
+        for child in graph.get(node, []):
+            if not self.topoSort(child, graph, visited, res):
+                return ''
+        res.appendleft(node)
+        visited[node] = 'P'
         return True
+
+    def updateGraph(self, graph, w1, w2):
+        minLen = min(len(w1), len(w2))
+        for i in range(minLen):
+            if i == minLen - 1 and w1[i] == w2[i] and len(w1) > len(w2):
+                return ''  # Illegal: First word is longer than 2nd but everything matches so far.
+            if w1[i] != w2[i]:
+                graph[w1[i]].append(w2[i])
+                break
 
 
 sol = Solution()

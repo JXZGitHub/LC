@@ -4,8 +4,29 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+import math
 class Solution(object):
+    def closestValue(self, root, target):
+        """
+        :type root: TreeNode
+        :type target: float
+        :rtype: int
+        Time: O(log(N))
+        Space: O(1)
+        """
+        closest = root.val
+        while root:
+            if math.fabs(target-root.val) < math.fabs(target-closest):
+                closest = root.val #If the current root is closer to target than prev one
+            if target < root.val:
+                root = root.left
+            elif target > root.val:
+                root = root.right
+            else: #Stop searching if exact match found
+                root = None
+        return closest
+
+class Solution_slow(object):
     def closestValue(self, root, target):
         """
         :type root: TreeNode
@@ -21,7 +42,6 @@ class Solution(object):
         """
         stack = []
         prev = float('-inf')
-        ret = None
         while root or stack:
             if root:
                 stack.append(root)
@@ -29,23 +49,12 @@ class Solution(object):
             else:
                 node = stack.pop()
                 if prev <= target <= node.val:
-                    if abs(target - prev) < abs(target - node.val):
+                    if abs(target - prev) <= abs(target - node.val):
                         return prev
                     else:
                         return node.val
-                if node.right:
-                    stack.append(node.right)
                 root = node.right
                 prev = node.val
-        return node.val
+        return node.val  # If target is larger than every node in tree
 
-    def closestValue2(self, root, target):
-        ret = root.val
-        while root:
-            if abs(root.val - target) < abs(ret - target):
-                ret = root.val
-            if target > root.val:
-                root = root.right
-            else:
-                root = root.left
-        return ret
+

@@ -26,6 +26,8 @@ class Solution(object):
                 curr_e = e
             else:
                 curr_e = max(curr_e, e)
-        if curr_s != float('inf') and curr_e != float('-inf'):
-            res.append([curr_s, curr_e])
+        res.append([curr_s, curr_e])
         return res
+
+sol = Solution()
+print (sol.merge([[1,5],[2,6]]))

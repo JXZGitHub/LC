@@ -51,7 +51,7 @@ class Solution2(object):
         if not root:
             return None
 
-        hc = self.treeToDoublyList(root.left)
+        leftNode = self.treeToDoublyList(root.left)
         rightNode = self.treeToDoublyList(root.right)
 
         root.left = root

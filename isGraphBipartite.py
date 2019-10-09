@@ -1,4 +1,33 @@
+
 from collections import deque
+
+
+class Solution(object):
+    def isBipartite(self, graph):
+        """
+        :type graph: List[List[int]]
+        :rtype: bool
+        """
+        nodeColor = {}  # node to color
+        for i in range(len(graph)):
+            if i in nodeColor:
+                continue
+            nodeColor[i] = 1
+            q = [i]
+            while q:
+                new_q = []
+                for n in q:
+                    neighbors = graph[n]
+                    for nbr in neighbors:
+                        if nbr in nodeColor and nodeColor[nbr] == nodeColor[n]:
+                            return False
+                        else:
+                            nodeColor[nbr] = - nodeColor[n]
+                            new_q.append(nbr)
+                q = new_q
+        return True
+
+
 
 class Solution_DFS_Recursive:
     def isBipartite(self, graph):
@@ -43,8 +72,7 @@ class Solution_DFS_Iterative:
             s.append(i)
             while s:
                 node = s.pop()
-                for neighbor in graph[
-                    node]:  # Compare all of its neighbor, either color it if uncolored, or compare if the neighbor is same color as itself.
+                for neighbor in graph[node]:  # Compare all of its neighbor, either color it if uncolored, or compare if the neighbor is same color as itself.
                     if neighbor not in nodeColor:
                         nodeColor[neighbor] = -nodeColor[node]
                         s.append(neighbor)
@@ -83,5 +111,5 @@ class Solution_BFS:
 
         return True
 
-sol = Solution_BFS()
+sol = Solution()
 print (sol.isBipartite( [[1,3], [0,2], [1,3], [0,2]]))

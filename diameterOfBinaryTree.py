@@ -73,12 +73,14 @@ class Solution_DFS_using_class_variable(object):
         Time: O(N)
         Space: O(log(N), aka height of tree) on stack frame.
 
-        At each node, its diameter is max depth (# of nodes)
+        Similar to max path sum: Global max is differnet from what's returned per level up recursive call
+
+        At each node, its diameter is max depth (ie, height)
         of its right subtree + max depth of its left subtree.
 
         So we compute that max depth of each node's right and left subtree and keep track of the largest of this value.
 
-        To do the above, we simpy perform a recursive find max depth starting with root, and during each recursive call,
+        To do the above, we perform a recursive find max depth starting with root, and during each recursive call,
         we update a global 'maxDiameter' to be the sum of a node's left and right subtree.
         """
         self.maxDepthOfTree(root)

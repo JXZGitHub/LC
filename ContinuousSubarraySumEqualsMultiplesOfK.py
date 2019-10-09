@@ -13,7 +13,8 @@ class Solution(object):
             runningSum += n
             if k != 0:
                 mod = runningSum % k
-            mod = runningSum % k
+            else:
+                mod = runningSum  #K==0 means our sub-sum must be 0 So the 'prev mod' is just the current sum.
             if mod in prevMod:
                 prevIndex = prevMod[mod]
                 if (i - prevIndex > 1):
